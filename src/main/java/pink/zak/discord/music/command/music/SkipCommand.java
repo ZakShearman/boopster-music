@@ -1,0 +1,49 @@
+package pink.zak.discord.music.command.music;
+
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+import pink.zak.discord.music.model.LiveServer;
+import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
+import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+
+import java.util.Optional;
+
+@Component
+public class SkipCommand extends BotCommand {
+    private final @NotNull LiveServerRepository liveServerRepository;
+
+    protected SkipCommand(@NotNull LiveServerRepository liveServerRepository) {
+        super("skip", true);
+        this.liveServerRepository = liveServerRepository;
+    }
+
+    @Override
+    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+        Guild guild = event.getGuild();
+        Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
+
+        if (optionalLiveServer.isEmpty()) {
+            event.reply("There is not a track playing").queue();
+            return;
+        }
+        LiveServer liveServer = optionalLiveServer.get();
+        AudioPlayer audioPlayer = liveServer.getAudioPlayer();
+        if (audioPlayer.getPlayingTrack() == null) {
+            event.reply("There is not a track playing").queue();
+            return;
+        }
+        audioPlayer.stopTrack();
+        event.reply("Skipped :)").queue();
+    }
+
+    @Override
+    protected CommandData createCommandData() {
+        return Commands.slash("skip", "Skips the current track");
+    }
+}
