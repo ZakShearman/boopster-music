@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.0.0-alpha.5")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.9")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation("com.sedmelluq:lavaplayer-natives:1.3.14")
 
