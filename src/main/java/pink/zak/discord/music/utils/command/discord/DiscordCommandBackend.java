@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 import net.dv8tion.jda.internal.JDAImpl;
 import net.dv8tion.jda.internal.interactions.command.CommandImpl;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -98,6 +99,7 @@ public class DiscordCommandBackend implements SlashCommandListener {
         //Use this commented line for testing new slash commands on a guild
 
         List<net.dv8tion.jda.api.interactions.commands.Command> createdCommands;
+        this.jda.getGuildById(904458629523050546L).updateCommands().complete();
         if (this.boopsterConfig.guildId() == null) {
             createdCommands = this.jda.updateCommands().addCommands(createdData).complete();
         } else {
@@ -145,13 +147,13 @@ public class DiscordCommandBackend implements SlashCommandListener {
         });
     }
 
-    private void executeCommand(GenericBotCommand command, Member sender, SlashCommandInteractionEvent event) {
+    private void executeCommand(@NotNull GenericBotCommand command, Member sender, SlashCommandInteractionEvent event) {
         command.middleMan(sender, event);
     }
 
-    private boolean memberHasAccess(GenericBotCommand simpleCommand, SlashCommandInteractionEvent event, Member member) {
-        if (simpleCommand.isAdmin() && member.getRoles().stream().anyMatch(role -> role.hasPermission(Permission.ADMINISTRATOR))) { // has admin if command requires
-            event.reply("no permission dud :|").queue();
+    private boolean memberHasAccess(@NotNull GenericBotCommand simpleCommand, SlashCommandInteractionEvent event, Member member) {
+        if (simpleCommand.isAdmin() && !member.isOwner() && member.getRoles().stream().noneMatch(role -> role.hasPermission(Permission.ADMINISTRATOR))) { // has admin if command requires
+            event.reply("no permission dud :|").setEphemeral(true).queue();
             return false;
         }
         return true;

@@ -65,7 +65,8 @@ public class LiveServer {
 
         @Override
         public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
-            LOGGER.error("Track exception: ", exception);
+            player.playTrack(track);
+            LOGGER.error("Track exception, retrying: ", exception);
         }
 
         @Override

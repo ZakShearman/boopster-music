@@ -52,7 +52,7 @@ public class PlayCommand extends BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(Member sender, @NotNull SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         String musicRequest = event.getOption("name").getAsString();
 
@@ -69,15 +69,12 @@ public class PlayCommand extends BotCommand {
         }
     }
 
-    private @NotNull Optional<Track> getSpotifyTrackId(String input) {
-        System.out.println("Length " + input.length());
+    private @NotNull Optional<Track> getSpotifyTrackId(@NotNull String input) {
         if (!input.startsWith("https://open.spotify.com/track/")) // 31 chars long link (before the URL)
             return Optional.empty();
 
         String inputEnd = input.substring(31);
-        System.out.println("Input end: " + inputEnd + " length " + inputEnd.length());
         String trackId = inputEnd.length() > 22 ? inputEnd.substring(0, 22) : inputEnd; // Spotify often puts ?si=xxxxxx at the end, this accounts for that
-        System.out.println("ID: " + trackId);
         if (trackId.length() != 22)
             return Optional.empty();
 
