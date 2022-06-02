@@ -10,25 +10,24 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.model.trackdata.TrackDataContainer;
 import pink.zak.discord.music.model.trackdata.TrackDataUser;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
 import pink.zak.discord.music.utils.types.DurationUtils;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.awt.*;
 import java.time.Duration;
 import java.util.Optional;
 
-@Component
-public class NowPlayingCommand extends BotCommand {
+@BotCommandComponent(name = "nowplaying", admin = false)
+public class NowPlayingCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
     @SneakyThrows
     protected NowPlayingCommand(@NotNull LiveServerRepository liveServerRepository) {
-        super("nowplaying", false);
         this.liveServerRepository = liveServerRepository;
     }
 
@@ -87,7 +86,7 @@ public class NowPlayingCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("nowplaying", "Gets the currently playing track");
     }
 }

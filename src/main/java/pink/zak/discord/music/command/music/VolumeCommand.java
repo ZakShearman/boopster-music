@@ -10,16 +10,15 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.service.AudioService;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
-@Component
-public class VolumeCommand extends BotCommand {
+@BotCommandComponent(name = "volume", admin = true)
+public class VolumeCommand implements BotCommand {
     private final @NotNull AudioService audioService;
 
     protected VolumeCommand(@NotNull AudioService audioService) {
-        super("volume", true);
         this.audioService = audioService;
     }
 
@@ -40,7 +39,7 @@ public class VolumeCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("volume", "Set the bot's volume")
             .addOptions(
                 new OptionData(OptionType.INTEGER, "volume", "The volume level (1-200)", false)

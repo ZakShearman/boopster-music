@@ -10,20 +10,19 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
 import pink.zak.discord.music.utils.types.DurationUtils;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.Optional;
 
-@Component
-public class SeekCommand extends BotCommand {
+@BotCommandComponent(name = "seek", admin = false)
+public class SeekCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
     protected SeekCommand(@NotNull LiveServerRepository liveServerRepository) {
-        super("seek", false);
         this.liveServerRepository = liveServerRepository;
     }
 
@@ -54,7 +53,7 @@ public class SeekCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("seek", "Skip to a certain time in the playing track")
             .addOptions(
                 new OptionData(OptionType.INTEGER, "time", "Time to skip to in seconds", true)

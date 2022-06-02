@@ -8,22 +8,21 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class QueueCommand extends BotCommand {
+@BotCommandComponent(name = "queue", admin = false)
+public class QueueCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
     private final MessageEmbed emptyQueueEmbed;
 
     protected QueueCommand(@NotNull LiveServerRepository liveServerRepository) {
-        super("queue", false);
         this.liveServerRepository = liveServerRepository;
 
         this.emptyQueueEmbed = new EmbedBuilder()
@@ -68,7 +67,7 @@ public class QueueCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("queue", "View the tracks in the queue.");
     }
 }

@@ -15,22 +15,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.HistoricTrack;
 import pink.zak.discord.music.repository.HistoricTrackRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
-import pink.zak.discord.music.utils.time.Time;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
+import pink.zak.discord.utils.time.Time;
 
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 
-@Component
-public class HistoryCommand extends BotCommand {
+@BotCommandComponent(name = "history", admin = false)
+public class HistoryCommand implements BotCommand {
     private final @NotNull HistoricTrackRepository historicTrackRepository;
 
     protected HistoryCommand(@NotNull HistoricTrackRepository historicTrackRepository) {
-        super("history", false);
         this.historicTrackRepository = historicTrackRepository;
     }
 
@@ -49,38 +48,38 @@ public class HistoryCommand extends BotCommand {
 
         StringBuilder descriptionBuilder = new StringBuilder();
         for (HistoricTrack track : trackPage) {
-            descriptionBuilder.append(Time.formatShort(Duration.between(track.getPlayTime(), Instant.now())))
-                .append(" | ")
-                .append(track.getTitle())
-                .append("\n");
+            descriptionBuilder.append(Time.format(Duration.between(track.getPlayTime(), Instant.now())))
+                    .append(" | ")
+                    .append(track.getTitle())
+                    .append("\n");
         }
         EmbedBuilder embedBuilder = new EmbedBuilder()
-            .setColor(Color.MAGENTA)
-            .setDescription(descriptionBuilder.toString());
+                .setColor(Color.MAGENTA)
+                .setDescription(descriptionBuilder.toString());
 
         User user = sender.getUser();
         if (isUser) {
             event.replyEmbeds(
-                embedBuilder
-                    .setAuthor(user.getName() + "#" + user.getDiscriminator(), null, user.getAvatarUrl())
-                    .build()
+                    embedBuilder
+                            .setAuthor(user.getName() + "#" + user.getDiscriminator(), null, user.getAvatarUrl())
+                            .build()
             ).queue();
         } else {
             event.replyEmbeds(
-                embedBuilder
-                    .setAuthor(guild.getName() + " History", null, guild.getIconUrl())
-                    .build()
+                    embedBuilder
+                            .setAuthor(guild.getName() + " History", null, guild.getIconUrl())
+                            .build()
             ).queue();
         }
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("history", "View track play history (defaults to user history)")
-            .addOptions(
-                new OptionData(OptionType.STRING, "target", "Get the history for a user or a server")
-                    .addChoice("user", "user")
-                    .addChoice("server", "server")
+                .addOptions(
+                        new OptionData(OptionType.STRING, "target", "Get the history for a user or a server")
+                                .addChoice("user", "user")
+                                .addChoice("server", "server")
                 );
     }
 }

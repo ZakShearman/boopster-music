@@ -7,15 +7,11 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import org.springframework.stereotype.Component;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
-@Component
-public class LeaveCommand extends BotCommand {
-
-    protected LeaveCommand() {
-        super("leave", false);
-    }
+@BotCommandComponent(name = "leave", admin = false)
+public class LeaveCommand implements BotCommand {
 
     @Override
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
@@ -32,7 +28,7 @@ public class LeaveCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("leave", "Leave a voice channel");
     }
 }

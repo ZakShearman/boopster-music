@@ -7,20 +7,19 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class RemoveAllCommand extends BotCommand {
+@BotCommandComponent(name = "removeall", admin = true)
+public class RemoveAllCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
     protected RemoveAllCommand(@NotNull LiveServerRepository liveServerRepository) {
-        super("removeall", true);
         this.liveServerRepository = liveServerRepository;
     }
 
@@ -44,7 +43,7 @@ public class RemoveAllCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("removeall", "removes all tracks from the queue");
     }
 }

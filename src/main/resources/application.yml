@@ -1,5 +1,8 @@
 discord:
-  token: discord_token
+  jda:
+    token: discord_token
+    online-status: DO_NOT_DISTURB
+    guild-id: guild_id
 
 spotify:
   client-id: spotify_client_id

@@ -20,14 +20,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.model.trackdata.TrackDataContainer;
 import pink.zak.discord.music.model.trackdata.TrackDataUser;
 import pink.zak.discord.music.service.AudioService;
 import pink.zak.discord.music.service.SpotifyService;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
 import pink.zak.discord.music.utils.types.DurationUtils;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 import se.michaelthelin.spotify.model_objects.specification.Image;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
@@ -36,8 +36,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class PlayCommand extends BotCommand {
+@BotCommandComponent(name = "play", admin = false)
+public class PlayCommand implements BotCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayCommand.class);
 
     private final @NotNull AudioPlayerManager audioPlayerManager;
@@ -45,7 +45,6 @@ public class PlayCommand extends BotCommand {
     private final @NotNull SpotifyService spotifyService;
 
     protected PlayCommand(@NotNull AudioPlayerManager audioPlayerManager, @NotNull AudioService audioService, @NotNull SpotifyService spotifyService) {
-        super("play", false);
         this.audioPlayerManager = audioPlayerManager;
         this.audioService = audioService;
         this.spotifyService = spotifyService;
@@ -209,7 +208,7 @@ public class PlayCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("play", "play a track")
             .addOption(OptionType.STRING, "name", "Name or URL of a youtube track", true);
     }

@@ -9,20 +9,19 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
-import pink.zak.discord.music.utils.command.discord.command.BotCommand;
+import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
+import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class RemoveCommand extends BotCommand {
+@BotCommandComponent(name = "remove", admin = true)
+public class RemoveCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
     protected RemoveCommand(@NotNull LiveServerRepository liveServerRepository) {
-        super("remove", true);
         this.liveServerRepository = liveServerRepository;
     }
 
@@ -53,7 +52,7 @@ public class RemoveCommand extends BotCommand {
     }
 
     @Override
-    protected CommandData createCommandData() {
+    public CommandData createCommandData() {
         return Commands.slash("remove", "Removes a specific track from the queue.")
             .addOptions(
                 new OptionData(OptionType.INTEGER, "position", "The position in the queue to remove the track", true)
