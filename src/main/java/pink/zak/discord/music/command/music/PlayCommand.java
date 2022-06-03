@@ -60,7 +60,7 @@ public class PlayCommand implements BotCommand {
         Optional<Track> optionalSpotifyTrack = this.getSpotifyTrackId(musicRequest);
         if (optionalSpotifyTrack.isPresent()) {
             Track track = optionalSpotifyTrack.get();
-            String searchTerm = "ytsearch:" + (track.getArtists().length > 0 ? track.getArtists()[0] + " - " : "") + track.getName();
+            String searchTerm = "ytsearch:" + (track.getArtists().length > 0 ? track.getArtists()[0].getName() + " - " : "") + track.getName();
             Image image = this.spotifyService.getLargestImage(track.getAlbum().getImages());
             this.audioPlayerManager.loadItemOrdered(guild, searchTerm, new ResultHandler(this.audioPlayerManager, liveServer, event, true, image.getUrl()));
         } else {
