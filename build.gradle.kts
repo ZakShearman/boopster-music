@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ZakShearman:spring-boot-starter-discord:c8250a07be")
+    implementation("com.github.ZakShearman:spring-boot-starter-discord:358b594e7f")
     implementation("net.dv8tion:JDA:5.0.0-alpha.9")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation("com.sedmelluq:lavaplayer-natives:1.3.14")

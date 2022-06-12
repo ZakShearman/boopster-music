@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+import java.util.concurrent.ScheduledExecutorService;
+
 @Configuration
 @EnableScheduling
 public class SchedulerConfig {
@@ -14,5 +16,10 @@ public class SchedulerConfig {
         ThreadPoolTaskScheduler pool = new ThreadPoolTaskScheduler();
         pool.setPoolSize(3);
         return pool;
+    }
+
+    @Bean
+    public ScheduledExecutorService scheduledExecutorService() {
+        return this.threadPoolTaskScheduler().getScheduledExecutor();
     }
 }
