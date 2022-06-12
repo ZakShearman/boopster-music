@@ -19,11 +19,8 @@ import pink.zak.discord.music.model.HistoricTrack;
 import pink.zak.discord.music.repository.HistoricTrackRepository;
 import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
 import pink.zak.discord.utils.discord.command.BotCommand;
-import pink.zak.discord.utils.time.Time;
 
 import java.awt.*;
-import java.time.Duration;
-import java.time.Instant;
 
 @BotCommandComponent(name = "history", admin = false)
 public class HistoryCommand implements BotCommand {
@@ -48,7 +45,7 @@ public class HistoryCommand implements BotCommand {
 
         StringBuilder descriptionBuilder = new StringBuilder();
         for (HistoricTrack track : trackPage) {
-            descriptionBuilder.append(Time.format(Duration.between(track.getPlayTime(), Instant.now())))
+            descriptionBuilder.append(String.format("<t:%s:R>", track.getPlayTime().getEpochSecond()))
                     .append(" | ")
                     .append(track.getTitle())
                     .append("\n");

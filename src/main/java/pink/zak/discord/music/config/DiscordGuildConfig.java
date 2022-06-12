@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pink.zak.discord.utils.spring.config.JdaConfiguration;
+import pink.zak.discord.utils.configuration.JdaConfiguration;
 
 @Configuration
 @AllArgsConstructor

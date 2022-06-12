@@ -22,7 +22,6 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.Optional;
 
-// todo
 @RequiredArgsConstructor
 @BotCommandComponent(name = "favourite", admin = false)
 public class FavouriteCommand implements BotCommand {

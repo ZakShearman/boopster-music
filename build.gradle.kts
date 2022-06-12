@@ -11,12 +11,13 @@ version = "0.0.1-SNAPSHOT"
 repositories {
     mavenCentral()
     mavenLocal()
+    maven("https://jitpack.io")
     maven("https://m2.dv8tion.net/releases")
     maven("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
-    implementation("pink.zak.discord:spring-boot-starter-discord:1.0") // this is a local dependency but if anyone needs it in the future, check my GitHub ZakShearman
+    implementation("com.github.ZakShearman:spring-boot-starter-discord:c8250a07be")
     implementation("net.dv8tion:JDA:5.0.0-alpha.9")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation("com.sedmelluq:lavaplayer-natives:1.3.14")
