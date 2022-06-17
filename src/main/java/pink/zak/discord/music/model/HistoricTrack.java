@@ -68,7 +68,7 @@ public class HistoricTrack {
             server,
             user,
             data.queueTime(),
-            Duration.ofSeconds(meta.length),
+            track.getInfo().isStream ? Duration.ZERO : Duration.ofSeconds(meta.length),
             meta.title,
             meta.author,
             meta.identifier,
