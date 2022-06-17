@@ -15,6 +15,9 @@ val versionObject = Version(major = "1", minor = "0", revision = "0")
 fun buildNumber(): String? {
     return System.getenv("build.number") ?: System.getProperty("build.number")
 }
+println("Build Number A " + System.getenv("build.number"))
+println("Build Number B " + System.getProperty("build.number"))
+println("Build Number C " + buildNumber())
 
 project.version = "$versionObject" + if (buildNumber() != null) "_" + buildNumber() else ""
 project.group = "pink.zak.discord"
