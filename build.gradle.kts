@@ -1,3 +1,8 @@
+/**
+ * The majority of elements were at least inspired and mostly taken from JDA and lightly modified for this project.
+ * You can find JDA's build.gradle.kts here: https://github.com/DV8FromTheWorld/JDA/blob/master/build.gradle.kts
+ */
+
 plugins {
     `java-library`
     id("org.springframework.boot") version "2.6.3"
@@ -5,8 +10,14 @@ plugins {
     id("io.freefair.lombok") version "6.1.0"
 }
 
-group = "pink.zak.discord"
-version = "0.0.1-SNAPSHOT"
+val versionObject = Version(major = "1", minor = "0", revision = "0")
+
+fun buildNumber(): String? {
+    return System.getenv("build.number") ?: System.getProperty("build.number")
+}
+
+project.version = "$versionObject" + if (buildNumber() != null) "_" + buildNumber() else ""
+project.group = "pink.zak.discord"
 
 repositories {
     mavenCentral()
@@ -46,5 +57,34 @@ java {
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
+// Taken from JDA https://github.com/DV8FromTheWorld/JDA/blob/master/build.gradle.kts#L319
+class Version(
+    val major: String,
+    val minor: String,
+    val revision: String,
+    val classifier: String? = null
+) {
+    companion object {
+        fun parse(string: String): Version {
+            val (major, minor, revision) = string.substringBefore("-").split(".")
+            val classifier = if ("-" in string) string.substringAfter("-") else null
+            return Version(major, minor, revision, classifier)
+        }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        if (other !is Version) return false
+        return major == other.major
+                && minor == other.minor
+                && revision == other.revision
+                && classifier == other.classifier
+    }
+
+    override fun toString(): String {
+        return "$major.$minor.$revision" + if (classifier != null) "-$classifier" else ""
     }
 }
