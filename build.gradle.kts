@@ -13,11 +13,8 @@ plugins {
 val versionObject = Version(major = "1", minor = "0", revision = "0")
 
 fun buildNumber(): String? {
-    return System.getenv("BUILD_NUMBER") ?: System.getProperty("BUILD_NUMBER")
+    return System.getenv("BUILD_NUMBER")
 }
-println("Build Number A " + System.getenv("BUILD_NUMBER"))
-println("Build Number B " + System.getProperty("BUILD_NUMBER"))
-println("Build Number C " + buildNumber())
 
 project.version = "$versionObject" + if (buildNumber() != null) "_" + buildNumber() else ""
 project.group = "pink.zak.discord"
