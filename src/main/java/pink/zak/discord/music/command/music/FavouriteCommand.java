@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import org.jetbrains.annotations.NotNull;
 import pink.zak.discord.music.model.LiveServer;
 import pink.zak.discord.music.model.MusicUser;
@@ -92,7 +93,11 @@ public class FavouriteCommand implements BotCommand {
 
     @Override
     public @NotNull CommandData createCommandData() {
-        return Commands.slash("favourite", "Favourite a song - use no option for current track")
-                .addOption(OptionType.STRING, "track", "URL of the track to favourite - don't provide this if you want the current track :)");
+        return Commands.slash("favourite", "Play, add, remove and list your favourite tracks")
+                .addSubcommands(
+                        new SubcommandData("add", "Add a Favourite a song - use no option for current track")
+                                .addOption(OptionType.STRING, "track", "URL of the track to favourite - don't provide this if you want the current track :)"),
+                        new SubcommandData("list", "List your favourited songs")
+                );
     }
 }

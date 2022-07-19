@@ -18,7 +18,8 @@ spring:
     password: ""
     driver-class-name: org.mariadb.jdbc.Driver
     hikari:
-      maximum-pool-size: 100
+      maximum-pool-size: 5
+
   jpa:
     hibernate:
       ddl-auto: update
