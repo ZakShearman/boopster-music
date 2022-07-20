@@ -28,8 +28,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ZakShearman:spring-boot-starter-discord:b95b9eddc5")
-    implementation("net.dv8tion:JDA:5.0.0-alpha.13")
+    implementation("com.github.ZakShearman:spring-boot-starter-discord:2d1f91442d")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.15")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
     implementation("com.google.code.gson:gson:2.9.0")
