@@ -47,7 +47,7 @@ public class SeekCommand implements BotCommand {
             return;
         }
 
-        int seconds = (int) event.getOption("time").getAsLong();
+        int seconds = event.getOption("time").getAsInt();
         playingTrack.setPosition(seconds * 1000L); // convert to millis
         event.reply("Seeked to " + DurationUtils.formatSeconds(seconds)).queue();
     }

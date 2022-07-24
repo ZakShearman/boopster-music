@@ -27,7 +27,7 @@ public class RemoveCommand implements BotCommand {
 
     @Override
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
-        int position = (int) event.getOption("position").getAsLong();
+        int position = event.getOption("position").getAsInt();
         Guild guild = event.getGuild();
 
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());

@@ -48,17 +48,17 @@ public class NowPlayingCommand implements BotCommand {
         Duration trackLength = Duration.ofMillis(track.getDuration());
 
         EmbedBuilder embedBuilder = new EmbedBuilder()
-            .setColor(Color.GREEN)
-            .setAuthor(trackUser.username() + "#" + trackUser.discriminator(), null, trackUser.avatarUrl())
-            .setThumbnail(trackData.imageUrl())
-            .setDescription(String.format("""
-                    [**%s**](%s)
-                    %s
-                    """,
-                trackMeta.title, trackMeta.uri,
-                this.createDurationLine(currentPosition, trackLength),
-                DurationUtils.format(currentPosition), DurationUtils.format(trackLength))
-            );
+                .setColor(Color.GREEN)
+                .setAuthor(trackUser.username() + "#" + trackUser.discriminator(), null, trackUser.avatarUrl())
+                .setThumbnail(trackData.imageUrl())
+                .setDescription("""
+                        [**%s**](%s)
+                        %s
+                        """.formatted(
+                        trackMeta.title, trackMeta.uri,
+                        this.createDurationLine(currentPosition, trackLength),
+                        DurationUtils.format(currentPosition), DurationUtils.format(trackLength))
+                );
 
         if (trackData.imageUrl() != null)
             embedBuilder.setThumbnail(trackData.imageUrl());
@@ -78,10 +78,10 @@ public class NowPlayingCommand implements BotCommand {
                 builder.append("▬");
         }
         builder.append(" [")
-            .append(DurationUtils.format(position))
-            .append("/")
-            .append(DurationUtils.format(length))
-            .append("] :speaker:");
+                .append(DurationUtils.format(position))
+                .append("/")
+                .append(DurationUtils.format(length))
+                .append("] :speaker:");
         return builder.toString();
     }
 

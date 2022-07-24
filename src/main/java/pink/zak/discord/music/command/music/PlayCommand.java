@@ -175,8 +175,8 @@ public class PlayCommand implements BotCommand {
 
             EmbedBuilder builder = new EmbedBuilder()
                     .setTitle("Now Playing " + meta.title)
-                    .setDescription(String.format("""      
-                            Length: `%s`""", DurationUtils.format(duration)))
+                    .setDescription("""      
+                            Length: `%s`""".formatted(DurationUtils.format(duration)))
                     .setColor(Color.GREEN);
 
             if (this.imageUrl != null)
@@ -193,9 +193,9 @@ public class PlayCommand implements BotCommand {
 
             EmbedBuilder builder = new EmbedBuilder()
                     .setTitle("Added to Queue " + meta.title)
-                    .setDescription(String.format("""
+                    .setDescription("""
                             Length: `%s`
-                            Position: #%s""", DurationUtils.format(duration), position))
+                            Position: #%s""".formatted(DurationUtils.format(duration), position))
                     .setColor(Color.ORANGE);
 
             if (this.imageUrl != null)

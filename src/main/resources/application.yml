@@ -10,7 +10,6 @@ spring:
   discord:
     token: discord_token
     online-status: DO_NOT_DISTURB
-    guild-id: 0
 
   datasource:
     url: jdbc:mariadb://localhost:3306/musicbot

@@ -47,7 +47,7 @@ public class HistoryMenu extends PageableButtonEmbedMenu {
 
         StringBuilder descriptionBuilder = new StringBuilder();
         for (HistoricTrack track : trackPage) {
-            descriptionBuilder.append(String.format("<t:%s:R>", track.getPlayTime().getEpochSecond()))
+            descriptionBuilder.append("<t:%s:R>".formatted(track.getPlayTime().getEpochSecond()))
                     .append(" | ")
                     .append(track.getTitle())
                     .append("\n");
@@ -55,7 +55,7 @@ public class HistoryMenu extends PageableButtonEmbedMenu {
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setColor(Color.MAGENTA)
                 .setDescription(descriptionBuilder.toString())
-                .setFooter(String.format("Page %s/%s (%s items)", page, this.maxPage, trackPage.getTotalElements()));
+                .setFooter("Page %s/%s (%s items)".formatted(page, this.maxPage, trackPage.getTotalElements()));
 
         if (this.user != null)
             embedBuilder.setAuthor(user.getName() + "#" + user.getDiscriminator(), null, user.getAvatarUrl());

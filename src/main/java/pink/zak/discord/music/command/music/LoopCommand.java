@@ -28,16 +28,16 @@ public class LoopCommand implements BotCommand {
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
-        int repeatCount = event.getOption("count") != null ? (int) event.getOption("count").getAsLong() : Integer.MAX_VALUE;
+        int repeatCount = event.getOption("count") != null ? event.getOption("count").getAsInt() : Integer.MAX_VALUE;
 
         if (optionalLiveServer.isEmpty() || optionalLiveServer.get().getAudioPlayer().getPlayingTrack() == null) {
             event.reply("There must be a track playing to loop.").queue();
             return;
         }
         LiveServer liveServer = optionalLiveServer.get();
-        AudioTrack currenTrack = liveServer.getAudioPlayer().getPlayingTrack();
+        AudioTrack currentTrack = liveServer.getAudioPlayer().getPlayingTrack();
 
-        if (currenTrack.getInfo().isStream) {
+        if (currentTrack.getInfo().isStream) {
             event.reply("The current track is a stream and cannot be looped.").queue();
             return;
         }

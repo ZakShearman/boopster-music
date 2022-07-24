@@ -31,7 +31,7 @@ public class VolumeCommand implements BotCommand {
         if (volumeMapping == null) {
             event.reply("The volume is currently set to " + audioPlayer.getVolume() + "%").queue();
         } else {
-            int volume = (int) volumeMapping.getAsLong();
+            int volume = volumeMapping.getAsInt();
             audioPlayer.setVolume(volume);
 
             event.reply("Set bot volume to " + volume + ".").queue();
