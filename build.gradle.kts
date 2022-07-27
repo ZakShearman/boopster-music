@@ -5,7 +5,7 @@
 
 plugins {
     `java-library`
-    id("org.springframework.boot") version "2.6.3"
+    id("org.springframework.boot") version "2.7.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("io.freefair.lombok") version "6.1.0"
 }
@@ -37,12 +37,14 @@ dependencies {
     implementation("se.michaelthelin.spotify:spotify-web-api-java:7.1.0")
     implementation("com.google.apis:google-api-services-youtube:v3-rev20220418-1.32.1")
 
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-mysql")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.springframework.data:spring-data-keyvalue")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.0.4")
+    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

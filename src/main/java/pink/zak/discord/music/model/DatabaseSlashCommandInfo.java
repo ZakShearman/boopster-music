@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class DatabaseSlashCommandInfo implements SlashCommandInfo {
 
     @Id
+    @Column(name = "discord_id")
     private long id;
 
     @Column(nullable = false)

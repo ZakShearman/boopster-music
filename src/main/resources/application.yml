@@ -3,8 +3,7 @@ spotify:
   client-secret: spotfy_client_secret
 
 youtube:
-  key: youtube_key
-
+  key: youtube_key # is this still necessary? IIRC this has been completely removed.
 
 spring:
   discord:
@@ -20,11 +19,8 @@ spring:
       maximum-pool-size: 5
 
   jpa:
-    hibernate:
-      ddl-auto: update
     show-sql: true
-    generate-ddl: true
 
     properties:
       hibernate:
-        enable_lazy_load_no_trans: true
+        enable_lazy_load_no_trans: true # investigate this, I don't remember why I added it initially

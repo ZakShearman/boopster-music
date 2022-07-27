@@ -12,14 +12,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
+@Table(name = "historic_track")
+
 @Getter
 @Setter
+
 @NoArgsConstructor
 public class HistoricTrack {
 
@@ -29,9 +34,11 @@ public class HistoricTrack {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "server_discord_id")
     private Server server;
 
     @ManyToOne
+    @JoinColumn(name = "user_discord_id")
     private MusicUser musicUser;
 
     @Column(name = "play_time")
@@ -43,20 +50,21 @@ public class HistoricTrack {
 
     private String author;
 
-    private String identifier;
+    @Column(name = "source_id")
+    private String sourceId;
 
     private boolean stream;
 
     private String url;
 
-    public HistoricTrack(Server server, MusicUser user, Instant playTime, Duration length, String title, String author, String identifier, boolean stream, String url) {
+    public HistoricTrack(Server server, MusicUser user, Instant playTime, Duration length, String title, String author, String sourceId, boolean stream, String url) {
         this.server = server;
         this.musicUser = user;
         this.playTime = playTime;
         this.length = length;
         this.title = title;
         this.author = author;
-        this.identifier = identifier;
+        this.sourceId = sourceId;
         this.stream = stream;
         this.url = url;
     }

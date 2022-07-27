@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -18,11 +19,12 @@ import java.util.List;
 public class Server {
 
     @Id
+    @Column(name = "discord_id")
     private long id;
 
     private int volume;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "id")
     private List<HistoricTrack> trackHistory;
 
     public Server(long id) {
