@@ -1,5 +1,6 @@
 package pink.zak.discord.music.service;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -28,13 +29,17 @@ public class AudioService {
     @Bean
     public static AudioPlayerManager audioPlayerManager() {
         AudioPlayerManager audioPlayerManager = new DefaultAudioPlayerManager();
+
+        AudioConfiguration configuration = audioPlayerManager.getConfiguration();
+        configuration.setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
+
         AudioSourceManagers.registerRemoteSources(audioPlayerManager);
 
         return audioPlayerManager;
     }
 
     public @NotNull LiveServer getLiveServer(@NotNull Guild guild) {
-       return this.liveServerRepository.findById(guild.getIdLong()).orElseGet(() -> {
+        return this.liveServerRepository.findById(guild.getIdLong()).orElseGet(() -> {
             AudioPlayer player = this.audioPlayerManager.createPlayer();
             player.setVolume(25);
 

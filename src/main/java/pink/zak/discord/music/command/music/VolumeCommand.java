@@ -29,7 +29,7 @@ public class VolumeCommand implements BotCommand {
         OptionMapping volumeMapping = event.getOption("volume");
         AudioPlayer audioPlayer = this.audioService.getLiveServer(guild).getAudioPlayer();
         if (volumeMapping == null) {
-            event.reply("The volume is currently set to " + audioPlayer.getVolume() + "%").queue();
+            event.reply("The volume is currently set to " + audioPlayer.getVolume() + "%").setEphemeral(true).queue();
         } else {
             int volume = volumeMapping.getAsInt();
             audioPlayer.setVolume(volume);
@@ -41,10 +41,10 @@ public class VolumeCommand implements BotCommand {
     @Override
     public CommandData createCommandData() {
         return Commands.slash("volume", "Set the bot's volume")
-            .addOptions(
-                new OptionData(OptionType.INTEGER, "volume", "The volume level (1-200)", false)
-                    .setMinValue(1)
-                    .setMaxValue(200)
-            );
+                .addOptions(
+                        new OptionData(OptionType.INTEGER, "volume", "The volume level (1-200)", false)
+                                .setMinValue(1)
+                                .setMaxValue(200)
+                );
     }
 }

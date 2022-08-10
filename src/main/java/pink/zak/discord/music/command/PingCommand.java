@@ -12,9 +12,9 @@ public class PingCommand implements BotCommand {
 
     @Override
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
-        event.getJDA().getRestPing().queue(result -> event.reply(":robot: *bap* " + result + "ms ping.")
-                .setEphemeral(true)
-                .queue());
+        event.getJDA().getRestPing()
+                .flatMap(result -> event.reply(":robot: *bap* " + result + "ms ping.").setEphemeral(true))
+                .queue();
     }
 
     @Override

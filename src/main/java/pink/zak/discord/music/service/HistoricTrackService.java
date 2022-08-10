@@ -18,6 +18,7 @@ public class HistoricTrackService {
     private final HistoricTrackRepository historicTrackRepository;
 
     // todo clean up the flow of creating a new user and server so we can do direct requests
+    // also some of this saving is so unnecessary.
     public void logTrackPlay(long guildId, long userId, AudioTrack track) {
         Server server = this.serverRepository.findById(guildId).orElseGet(() -> this.serverRepository.save(new Server(guildId)));
         MusicUser user = this.userRepository.findById(userId).orElseGet(() -> this.userRepository.save(new MusicUser(userId)));
