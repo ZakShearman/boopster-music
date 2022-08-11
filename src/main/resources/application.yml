@@ -5,6 +5,7 @@ spotify:
 youtube:
   key: youtube_key # is this still necessary? IIRC this has been completely removed.
 
+
 spring:
   discord:
     token: discord_token
@@ -17,7 +18,3 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     hikari:
       maximum-pool-size: 5
-
-    properties:
-      hibernate:
-        enable_lazy_load_no_trans: true # investigate this, I don't remember why I added it initially

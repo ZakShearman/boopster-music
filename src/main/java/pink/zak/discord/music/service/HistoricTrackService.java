@@ -10,6 +10,8 @@ import pink.zak.discord.music.repository.HistoricTrackRepository;
 import pink.zak.discord.music.repository.MusicUserRepository;
 import pink.zak.discord.music.repository.ServerRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class HistoricTrackService {
@@ -19,6 +21,7 @@ public class HistoricTrackService {
 
     // todo clean up the flow of creating a new user and server so we can do direct requests
     // also some of this saving is so unnecessary.
+    @Transactional
     public void logTrackPlay(long guildId, long userId, AudioTrack track) {
         Server server = this.serverRepository.findById(guildId).orElseGet(() -> this.serverRepository.save(new Server(guildId)));
         MusicUser user = this.userRepository.findById(userId).orElseGet(() -> this.userRepository.save(new MusicUser(userId)));
