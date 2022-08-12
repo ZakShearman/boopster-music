@@ -2,6 +2,8 @@ package pink.zak.discord.music.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,8 @@ import java.time.temporal.ChronoUnit;
 @ConstructorBinding
 @RequiredArgsConstructor
 public class SpotifyConfig {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyConfig.class);
+
     private final String clientId;
     private final String clientSecret;
 
@@ -24,24 +28,24 @@ public class SpotifyConfig {
     @Bean
     public SpotifyApi spotifyApi(ThreadPoolTaskScheduler scheduler) {
         this.spotifyApi = new SpotifyApi.Builder()
-            .setClientId(this.clientId)
-            .setClientSecret(this.clientSecret)
-            .build();
+                .setClientId(this.clientId)
+                .setClientSecret(this.clientSecret)
+                .build();
 
-        this.startRenewCredentialsFlow(scheduler);
+        this.renewCredentials(scheduler);
+
         return this.spotifyApi;
     }
 
-    private void startRenewCredentialsFlow(ThreadPoolTaskScheduler scheduler) {
-        ClientCredentials credentials = this.renewCredentials();
-
-        scheduler.schedule(this::renewCredentials, Instant.now().plus(credentials.getExpiresIn() - 10, ChronoUnit.MINUTES)); // give us 10 mins spare. We should check if this fails in the future
-    }
-
     @SneakyThrows
-    private ClientCredentials renewCredentials() {
+    private ClientCredentials renewCredentials(ThreadPoolTaskScheduler scheduler) {
         ClientCredentials credentials = this.spotifyApi.clientCredentials().build().execute();
         this.spotifyApi.setAccessToken(credentials.getAccessToken());
+
+        LOGGER.info("Retrieved spotify access token. Resets in {} seconds", credentials.getExpiresIn());
+
+        // give us 10 mins spare. We should check if this fails in the future
+        scheduler.schedule(() -> this.renewCredentials(scheduler), Instant.now().plus(credentials.getExpiresIn() - 10, ChronoUnit.MINUTES));
 
         return credentials;
     }
