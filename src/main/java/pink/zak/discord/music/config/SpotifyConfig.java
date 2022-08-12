@@ -44,8 +44,8 @@ public class SpotifyConfig {
 
         LOGGER.info("Retrieved spotify access token. Resets in {} seconds", credentials.getExpiresIn());
 
-        // give us 10 mins spare. We should check if this fails in the future
-        scheduler.schedule(() -> this.renewCredentials(scheduler), Instant.now().plus(credentials.getExpiresIn() - 10, ChronoUnit.MINUTES));
+        // give us 1 minute spare. We should check if this fails in the future
+        scheduler.schedule(() -> this.renewCredentials(scheduler), Instant.now().plus(credentials.getExpiresIn() - 60, ChronoUnit.SECONDS));
 
         return credentials;
     }
