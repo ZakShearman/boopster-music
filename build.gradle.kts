@@ -29,13 +29,10 @@ repositories {
 
 dependencies {
     implementation("com.github.ZakShearman:spring-boot-starter-discord:2d1f91442d")
-    implementation("net.dv8tion:JDA:5.0.0-alpha.15")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.17")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
-    implementation("com.google.code.gson:gson:2.9.0")
-
     implementation("se.michaelthelin.spotify:spotify-web-api-java:7.1.0")
-    implementation("com.google.apis:google-api-services-youtube:v3-rev20220418-1.32.1")
 
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
