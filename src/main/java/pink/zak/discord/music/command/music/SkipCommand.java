@@ -22,6 +22,7 @@ public class SkipCommand implements BotCommand {
         this.liveServerRepository = liveServerRepository;
     }
 
+    // todo handle looped tracks
     @Override
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();

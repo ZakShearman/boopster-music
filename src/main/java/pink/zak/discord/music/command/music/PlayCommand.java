@@ -51,13 +51,13 @@ public class PlayCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, @NotNull SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, @NotNull SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         String musicRequest = event.getOption("name").getAsString();
 
         LiveServer liveServer = this.audioService.getLiveServer(guild);
 
-        Optional<Track> optionalSpotifyTrack = this.getSpotifyTrackId(musicRequest);
+        Optional<Track> optionalSpotifyTrack = this.spotifyService.parseTrackFromUrl(musicRequest);
         if (optionalSpotifyTrack.isPresent()) {
             Track track = optionalSpotifyTrack.get();
             String searchTerm = "ytsearch:" + (track.getArtists().length > 0 ? track.getArtists()[0].getName() + " - " : "") + track.getName();
@@ -66,18 +66,6 @@ public class PlayCommand implements BotCommand {
         } else {
             this.audioPlayerManager.loadItemOrdered(guild, musicRequest, new ResultHandler(this.audioPlayerManager, liveServer, event, false));
         }
-    }
-
-    private @NotNull Optional<Track> getSpotifyTrackId(@NotNull String input) {
-        if (!input.startsWith("https://open.spotify.com/track/")) // 31 chars long link (before the URL)
-            return Optional.empty();
-
-        String inputEnd = input.substring(31);
-        String trackId = inputEnd.length() > 22 ? inputEnd.substring(0, 22) : inputEnd; // Spotify often puts ?si=xxxxxx at the end, this accounts for that
-        if (trackId.length() != 22)
-            return Optional.empty();
-
-        return Optional.of(this.spotifyService.getSpotifyTrack(trackId));
     }
 
     private record ResultHandler(@NotNull AudioPlayerManager audioPlayerManager,

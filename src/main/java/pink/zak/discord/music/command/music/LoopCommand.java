@@ -30,11 +30,24 @@ public class LoopCommand implements BotCommand {
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
         int repeatCount = event.getOption("count") != null ? event.getOption("count").getAsInt() : Integer.MAX_VALUE;
 
-        if (optionalLiveServer.isEmpty() || optionalLiveServer.get().getAudioPlayer().getPlayingTrack() == null) {
+        if (optionalLiveServer.isEmpty()) {
             event.reply("There must be a track playing to loop.").queue();
             return;
         }
+
         LiveServer liveServer = optionalLiveServer.get();
+
+        if ((event.getOption("count") == null && liveServer.getQueueController().getRepeatsRemaining().get() > 0) || repeatCount == 0) {
+            event.reply("Stopped looping the current track").queue();
+            liveServer.getQueueController().getRepeatsRemaining().set(0);
+            return;
+        }
+
+        if (liveServer.getAudioPlayer().getPlayingTrack() == null) {
+            event.reply("There must be a track playing to loop.").queue();
+            return;
+        }
+
         AudioTrack currentTrack = liveServer.getAudioPlayer().getPlayingTrack();
 
         if (currentTrack.getInfo().isStream) {
@@ -53,10 +66,10 @@ public class LoopCommand implements BotCommand {
     @Override
     public CommandData createCommandData() {
         return Commands.slash("loop", "Loop the current track a specified amount of times")
-            .addOptions(
-                new OptionData(OptionType.INTEGER, "count", "Amount of times to repeat the track", false)
-                    .setMinValue(1)
-                    .setMaxValue(Integer.MAX_VALUE)
-            );
+                .addOptions(
+                        new OptionData(OptionType.INTEGER, "count", "Amount of times to repeat the track", false)
+                                .setMinValue(1)
+                                .setMaxValue(Integer.MAX_VALUE)
+                );
     }
 }
