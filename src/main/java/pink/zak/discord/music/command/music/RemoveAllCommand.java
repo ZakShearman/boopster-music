@@ -29,13 +29,13 @@ public class RemoveAllCommand implements BotCommand {
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
         if (optionalLiveServer.isEmpty()) {
-            event.reply("There are no songs in the queue").queue();
+            event.reply("There are no tracks in the queue").queue();
             return;
         }
         LiveServer liveServer = optionalLiveServer.get();
         List<AudioTrack> trackQueue = liveServer.getQueueController().getQueue();
         if (trackQueue.isEmpty()) {
-            event.reply("There are no songs in the queue").queue();
+            event.reply("There are no tracks in the queue").queue();
             return;
         }
         trackQueue.clear();

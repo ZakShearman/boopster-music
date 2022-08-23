@@ -22,7 +22,6 @@ public class SkipCommand implements BotCommand {
         this.liveServerRepository = liveServerRepository;
     }
 
-    // todo handle looped tracks
     @Override
     public void onExecute(Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
@@ -39,7 +38,8 @@ public class SkipCommand implements BotCommand {
             return;
         }
         audioPlayer.stopTrack();
-        event.reply("Skipped :)").queue();
+        liveServer.getQueueController().getRepeatsRemaining().set(0);
+        event.reply("Skipped the current track.").queue();
     }
 
     @Override

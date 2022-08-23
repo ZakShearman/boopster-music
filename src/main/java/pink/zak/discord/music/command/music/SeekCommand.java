@@ -32,14 +32,14 @@ public class SeekCommand implements BotCommand {
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
         if (optionalLiveServer.isEmpty()) {
-            event.reply("There is not a song playing.").queue();
+            event.reply("There is not a track playing.").queue();
             return;
         }
         LiveServer liveServer = optionalLiveServer.get();
         AudioPlayer audioPlayer = liveServer.getAudioPlayer();
         AudioTrack playingTrack = audioPlayer.getPlayingTrack();
         if (audioPlayer.getPlayingTrack() == null) {
-            event.reply("There is not a song playing.").queue();
+            event.reply("There is not a track playing.").queue();
             return;
         }
         if (!playingTrack.isSeekable()) {
