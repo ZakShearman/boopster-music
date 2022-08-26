@@ -2,10 +2,6 @@ spotify:
   client-id: spotify_client_id
   client-secret: spotfy_client_secret
 
-youtube:
-  key: youtube_key # is this still necessary? IIRC this has been completely removed.
-
-
 spring:
   discord:
     token: discord_token
