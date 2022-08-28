@@ -44,6 +44,7 @@ public class SkipCommand implements BotCommand {
 
     @Override
     public CommandData createCommandData() {
-        return Commands.slash("skip", "Skips the current track");
+        return Commands.slash("skip", "Skips the current track")
+                .setGuildOnly(true);
     }
 }

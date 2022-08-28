@@ -45,6 +45,7 @@ public class VolumeCommand implements BotCommand {
                         new OptionData(OptionType.INTEGER, "volume", "The volume level (1-200)", false)
                                 .setMinValue(1)
                                 .setMaxValue(200)
-                );
+                )
+                .setGuildOnly(true);
     }
 }

@@ -54,10 +54,11 @@ public class RemoveCommand implements BotCommand {
     @Override
     public CommandData createCommandData() {
         return Commands.slash("remove", "Removes a specific track from the queue.")
-            .addOptions(
-                new OptionData(OptionType.INTEGER, "position", "The position in the queue to remove the track", true)
-                    .setMinValue(1)
-                    .setMaxValue(1000)
-            );
+                .addOptions(
+                        new OptionData(OptionType.INTEGER, "position", "The position in the queue to remove the track", true)
+                                .setMinValue(1)
+                                .setMaxValue(1000)
+                )
+                .setGuildOnly(true);
     }
 }

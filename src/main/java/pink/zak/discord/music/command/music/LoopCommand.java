@@ -70,6 +70,7 @@ public class LoopCommand implements BotCommand {
                         new OptionData(OptionType.INTEGER, "count", "Amount of times to repeat the track", false)
                                 .setMinValue(1)
                                 .setMaxValue(Integer.MAX_VALUE)
-                );
+                )
+                .setGuildOnly(true);
     }
 }

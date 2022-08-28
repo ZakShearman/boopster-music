@@ -87,6 +87,7 @@ public class NowPlayingCommand implements BotCommand {
 
     @Override
     public CommandData createCommandData() {
-        return Commands.slash("nowplaying", "Gets the currently playing track");
+        return Commands.slash("nowplaying", "Gets the currently playing track")
+                .setGuildOnly(true);
     }
 }

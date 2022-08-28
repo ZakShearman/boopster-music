@@ -55,10 +55,11 @@ public class SeekCommand implements BotCommand {
     @Override
     public CommandData createCommandData() {
         return Commands.slash("seek", "Skip to a certain time in the playing track")
-            .addOptions(
-                new OptionData(OptionType.INTEGER, "time", "Time to skip to in seconds", true)
-                    .setMinValue(0)
-                    .setMaxValue(Integer.MAX_VALUE)
-            );
+                .addOptions(
+                        new OptionData(OptionType.INTEGER, "time", "Time to skip to in seconds", true)
+                                .setMinValue(0)
+                                .setMaxValue(Integer.MAX_VALUE)
+                )
+                .setGuildOnly(true);
     }
 }

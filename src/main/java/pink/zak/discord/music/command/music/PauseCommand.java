@@ -1,8 +1,9 @@
 package pink.zak.discord.music.command.music;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -16,38 +17,46 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@BotCommandComponent(name = "disconnect", admin = true)
-public class DisconnectCommand implements BotCommand {
+@BotCommandComponent(name = "pause", admin = false)
+public class PauseCommand implements BotCommand {
     private final LiveServerRepository liveServerRepository;
 
     @Override
     public void onExecute(@NotNull Member sender, @NotNull SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
-        GuildVoiceState voiceState = guild.getSelfMember().getVoiceState();
-        if (voiceState == null || !voiceState.inAudioChannel()) {
-            event.reply("The bot is not connected to a voice channel.").setEphemeral(true).queue();
-            return;
-        }
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
         if (optionalLiveServer.isEmpty()) {
-            event.reply("The bot is not connected to a voice channel.").setEphemeral(true).queue();
+            event.reply("There must be a track playing to pause.").queue();
             return;
         }
 
         LiveServer liveServer = optionalLiveServer.get();
-        liveServer.getQueueController().getQueue().clear();
-        liveServer.getQueueController().getRepeatsRemaining().set(0);
-        liveServer.getAudioPlayer().destroy();
 
-        guild.getAudioManager().closeAudioConnection();
+        if (liveServer.getAudioPlayer().getPlayingTrack() == null) {
+            event.reply("There must be a track playing to pause.").queue();
+            return;
+        }
 
-        event.reply("Disconnected").queue();
+        AudioPlayer audioPlayer = liveServer.getAudioPlayer();
+        AudioTrack currentTrack = audioPlayer.getPlayingTrack();
+
+        if (currentTrack.getInfo().isStream) {
+            event.reply("The current track is a stream and cannot be paused.").queue();
+            return;
+        }
+
+        audioPlayer.setPaused(!audioPlayer.isPaused());
+
+        if (audioPlayer.isPaused())
+            event.reply(":white_check_mark: The current track is now paused.").queue();
+        else
+            event.reply(":white_check_mark: The current track will now play.").queue();
     }
 
     @Override
     public @NotNull CommandData createCommandData() {
-        return Commands.slash("disconnect", "Make the bot disconnect from the voice channel.")
+        return Commands.slash("pause", "pauses the current track")
                 .setGuildOnly(true);
     }
 }

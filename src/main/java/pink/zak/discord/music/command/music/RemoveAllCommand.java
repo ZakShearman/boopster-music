@@ -44,6 +44,7 @@ public class RemoveAllCommand implements BotCommand {
 
     @Override
     public CommandData createCommandData() {
-        return Commands.slash("removeall", "removes all tracks from the queue");
+        return Commands.slash("removeall", "removes all tracks from the queue")
+                .setGuildOnly(true);
     }
 }

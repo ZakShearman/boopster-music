@@ -28,7 +28,7 @@ public class HistoryCommand implements BotCommand {
         OptionMapping option = event.getOption("target");
         boolean isUser = option == null || option.getAsString().equals("user");
 
-            new HistoryMenu(this.buttonRegistry, this.scheduler, this.historicTrackRepository, event, isUser);
+        new HistoryMenu(this.buttonRegistry, this.scheduler, this.historicTrackRepository, event, isUser);
     }
 
     @Override
@@ -38,6 +38,7 @@ public class HistoryCommand implements BotCommand {
                         new OptionData(OptionType.STRING, "target", "Get the history for a user or a server")
                                 .addChoice("user", "user")
                                 .addChoice("server", "server")
-                );
+                )
+                .setGuildOnly(true);
     }
 }

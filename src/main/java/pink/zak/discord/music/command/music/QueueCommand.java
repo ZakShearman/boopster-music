@@ -68,6 +68,7 @@ public class QueueCommand implements BotCommand {
 
     @Override
     public CommandData createCommandData() {
-        return Commands.slash("queue", "View the tracks in the queue.");
+        return Commands.slash("queue", "View the tracks in the queue.")
+                .setGuildOnly(true);
     }
 }

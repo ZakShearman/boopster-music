@@ -40,8 +40,8 @@ public class LiveServer {
     public class QueueController extends AudioEventAdapter {
         private static final Logger LOGGER = LoggerFactory.getLogger(QueueController.class);
 
-        private final List<AudioTrack> queue = new CopyOnWriteArrayList<>();
-        private final AtomicLong repeatsRemaining = new AtomicLong();
+        private final @NotNull List<AudioTrack> queue = new CopyOnWriteArrayList<>();
+        private final @NotNull AtomicLong repeatsRemaining = new AtomicLong();
 
         private final @NotNull HistoricTrackService serverService;
 
@@ -79,11 +79,11 @@ public class LiveServer {
             LOGGER.error("Track stuck exception: ", (Object[]) stackTrace);
         }
 
-        public List<AudioTrack> getQueue() {
+        public @NotNull List<AudioTrack> getQueue() {
             return this.queue;
         }
 
-        public AtomicLong getRepeatsRemaining() {
+        public @NotNull AtomicLong getRepeatsRemaining() {
             return this.repeatsRemaining;
         }
     }
