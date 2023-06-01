@@ -5,9 +5,9 @@
 
 plugins {
     `java-library`
-    id("org.springframework.boot") version "2.7.3"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("io.freefair.lombok") version "6.1.0"
+    id("org.springframework.boot") version "3.1.0"
+    id("io.spring.dependency-management") version "1.1.0"
+    id("io.freefair.lombok") version "8.0.1"
 }
 
 val versionObject = Version(major = "1", minor = "0", revision = "0")
@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ZakShearman:spring-boot-starter-discord:2d1f91442d")
+    implementation("com.github.ZakShearman:spring-boot-starter-discord:2bf1089025")
     implementation("net.dv8tion:JDA:5.0.0-beta.9")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 

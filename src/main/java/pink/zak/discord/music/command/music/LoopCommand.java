@@ -16,7 +16,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.Optional;
 
-@BotCommandComponent(name = "loop", admin = false)
+@BotCommandComponent(name = "loop")
 public class LoopCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -25,7 +25,7 @@ public class LoopCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
         int repeatCount = event.getOption("count") != null ? event.getOption("count").getAsInt() : Integer.MAX_VALUE;
@@ -64,7 +64,7 @@ public class LoopCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("loop", "Loop the current track a specified amount of times")
                 .addOptions(
                         new OptionData(OptionType.INTEGER, "count", "Amount of times to repeat the track", false)

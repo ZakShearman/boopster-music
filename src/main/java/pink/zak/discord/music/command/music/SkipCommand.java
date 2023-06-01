@@ -1,9 +1,11 @@
 package pink.zak.discord.music.command.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +16,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.Optional;
 
-@BotCommandComponent(name = "skip", admin = true)
+@BotCommandComponent(name = "skip")
 public class SkipCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -43,8 +45,9 @@ public class SkipCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("skip", "Skips the current track")
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                 .setGuildOnly(true);
     }
 }

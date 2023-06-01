@@ -17,7 +17,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@BotCommandComponent(name = "pause", admin = false)
+@BotCommandComponent(name = "pause")
 public class PauseCommand implements BotCommand {
     private final LiveServerRepository liveServerRepository;
 

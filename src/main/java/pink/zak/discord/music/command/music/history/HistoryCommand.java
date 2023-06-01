@@ -17,14 +17,14 @@ import pink.zak.discord.utils.listener.ButtonRegistry;
 import java.util.concurrent.ScheduledExecutorService;
 
 @RequiredArgsConstructor
-@BotCommandComponent(name = "history", admin = false)
+@BotCommandComponent(name = "history")
 public class HistoryCommand implements BotCommand {
     private final @NotNull HistoricTrackRepository historicTrackRepository;
     private final ButtonRegistry buttonRegistry;
     private final ScheduledExecutorService scheduler;
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         OptionMapping option = event.getOption("target");
         boolean isUser = option == null || option.getAsString().equals("user");
 
@@ -32,7 +32,7 @@ public class HistoryCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("history", "View track play history (defaults to user history)")
                 .addOptions(
                         new OptionData(OptionType.STRING, "target", "Get the history for a user or a server")

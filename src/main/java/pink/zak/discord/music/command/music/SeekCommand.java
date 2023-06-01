@@ -18,7 +18,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 
 import java.util.Optional;
 
-@BotCommandComponent(name = "seek", admin = false)
+@BotCommandComponent(name = "seek")
 public class SeekCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -27,7 +27,7 @@ public class SeekCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
@@ -53,7 +53,7 @@ public class SeekCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("seek", "Skip to a certain time in the playing track")
                 .addOptions(
                         new OptionData(OptionType.INTEGER, "time", "Time to skip to in seconds", true)

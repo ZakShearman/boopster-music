@@ -22,7 +22,7 @@ import java.awt.*;
 import java.time.Duration;
 import java.util.Optional;
 
-@BotCommandComponent(name = "nowplaying", admin = false)
+@BotCommandComponent(name = "nowplaying")
 public class NowPlayingCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -32,7 +32,7 @@ public class NowPlayingCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
@@ -86,7 +86,7 @@ public class NowPlayingCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("nowplaying", "Gets the currently playing track")
                 .setGuildOnly(true);
     }

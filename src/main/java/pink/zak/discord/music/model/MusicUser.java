@@ -1,15 +1,15 @@
 package pink.zak.discord.music.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class MusicUser {
     @Column(name = "creation_timestamp")
     private Instant creationTimestamp;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "musicUser")
     private List<HistoricTrack> trackHistory;
 
     public MusicUser(long id) {

@@ -4,14 +4,15 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import org.jetbrains.annotations.NotNull;
 import pink.zak.discord.utils.discord.annotations.BotCommandComponent;
 import pink.zak.discord.utils.discord.command.BotCommand;
 
-@BotCommandComponent(name = "ping", admin = false)
+@BotCommandComponent(name = "ping")
 public class PingCommand implements BotCommand {
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         event.getJDA().getRestPing()
                 .flatMap(result -> event.reply(":robot: *bap* " + result + "ms ping.").setEphemeral(true))
                 .queue();

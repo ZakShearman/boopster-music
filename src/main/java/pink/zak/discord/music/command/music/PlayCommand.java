@@ -36,7 +36,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
-@BotCommandComponent(name = "play", admin = false)
+@BotCommandComponent(name = "play")
 public class PlayCommand implements BotCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayCommand.class);
 
@@ -196,7 +196,7 @@ public class PlayCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("play", "play a track")
                 .addOption(OptionType.STRING, "name", "Name or URL of a youtube track", true)
                 .setGuildOnly(true);

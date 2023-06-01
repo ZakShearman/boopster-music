@@ -1,10 +1,12 @@
 package pink.zak.discord.music.command.music;
 
 import lombok.RequiredArgsConstructor;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +18,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@BotCommandComponent(name = "disconnect", admin = true)
+@BotCommandComponent(name = "disconnect")
 public class DisconnectCommand implements BotCommand {
     private final LiveServerRepository liveServerRepository;
 
@@ -48,6 +50,7 @@ public class DisconnectCommand implements BotCommand {
     @Override
     public @NotNull CommandData createCommandData() {
         return Commands.slash("disconnect", "Make the bot disconnect from the voice channel.")
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                 .setGuildOnly(true);
     }
 }

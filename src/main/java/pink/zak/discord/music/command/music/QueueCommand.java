@@ -17,7 +17,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-@BotCommandComponent(name = "queue", admin = false)
+@BotCommandComponent(name = "queue")
 public class QueueCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
     private final MessageEmbed emptyQueueEmbed;
@@ -33,7 +33,7 @@ public class QueueCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(event.getGuild().getIdLong());
 
         if (optionalLiveServer.isEmpty()) {
@@ -67,7 +67,7 @@ public class QueueCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("queue", "View the tracks in the queue.")
                 .setGuildOnly(true);
     }

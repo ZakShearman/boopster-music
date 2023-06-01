@@ -1,6 +1,7 @@
 package pink.zak.discord.music.service;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pink.zak.discord.music.model.HistoricTrack;
@@ -9,8 +10,6 @@ import pink.zak.discord.music.model.Server;
 import pink.zak.discord.music.repository.HistoricTrackRepository;
 import pink.zak.discord.music.repository.MusicUserRepository;
 import pink.zak.discord.music.repository.ServerRepository;
-
-import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor

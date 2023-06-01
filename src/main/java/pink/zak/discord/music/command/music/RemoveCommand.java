@@ -1,9 +1,11 @@
 package pink.zak.discord.music.command.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -17,7 +19,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 import java.util.List;
 import java.util.Optional;
 
-@BotCommandComponent(name = "remove", admin = true)
+@BotCommandComponent(name = "remove")
 public class RemoveCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -26,7 +28,7 @@ public class RemoveCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         int position = event.getOption("position").getAsInt();
         Guild guild = event.getGuild();
 
@@ -52,13 +54,14 @@ public class RemoveCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("remove", "Removes a specific track from the queue.")
                 .addOptions(
                         new OptionData(OptionType.INTEGER, "position", "The position in the queue to remove the track", true)
                                 .setMinValue(1)
                                 .setMaxValue(1000)
                 )
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                 .setGuildOnly(true);
     }
 }

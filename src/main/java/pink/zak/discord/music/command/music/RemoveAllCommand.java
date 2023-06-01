@@ -1,9 +1,11 @@
 package pink.zak.discord.music.command.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +17,7 @@ import pink.zak.discord.utils.discord.command.BotCommand;
 import java.util.List;
 import java.util.Optional;
 
-@BotCommandComponent(name = "removeall", admin = true)
+@BotCommandComponent(name = "removeall")
 public class RemoveAllCommand implements BotCommand {
     private final @NotNull LiveServerRepository liveServerRepository;
 
@@ -24,7 +26,7 @@ public class RemoveAllCommand implements BotCommand {
     }
 
     @Override
-    public void onExecute(Member sender, SlashCommandInteractionEvent event) {
+    public void onExecute(@NotNull Member sender, SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         Optional<LiveServer> optionalLiveServer = this.liveServerRepository.findById(guild.getIdLong());
 
@@ -43,8 +45,9 @@ public class RemoveAllCommand implements BotCommand {
     }
 
     @Override
-    public CommandData createCommandData() {
+    public @NotNull CommandData createCommandData() {
         return Commands.slash("removeall", "removes all tracks from the queue")
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                 .setGuildOnly(true);
     }
 }

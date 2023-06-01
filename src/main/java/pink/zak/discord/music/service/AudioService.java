@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import pink.zak.discord.music.model.LiveServer;
+import pink.zak.discord.music.repository.ServerRepository;
 import pink.zak.discord.music.repository.keyvalue.LiveServerRepository;
 
 import java.nio.Buffer;
@@ -25,6 +26,7 @@ public class AudioService {
     private final LiveServerRepository liveServerRepository;
 
     private final HistoricTrackService historicTrackService;
+    private final ServerRepository serverRepository;
 
     @Bean
     public static AudioPlayerManager audioPlayerManager() {
@@ -41,7 +43,9 @@ public class AudioService {
     public @NotNull LiveServer getLiveServer(@NotNull Guild guild) {
         return this.liveServerRepository.findById(guild.getIdLong()).orElseGet(() -> {
             AudioPlayer player = this.audioPlayerManager.createPlayer();
-            player.setVolume(25);
+
+            Integer volume = this.serverRepository.findVolumeById(guild.getIdLong());
+            player.setVolume(volume == null ? 25 : volume);
 
             LiveServer newServer = new LiveServer(guild.getIdLong(), player, this.historicTrackService);
             player.addListener(newServer.getQueueController());
