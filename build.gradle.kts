@@ -29,7 +29,7 @@ repositories {
 
 dependencies {
     implementation("com.github.ZakShearman:spring-boot-starter-discord:2d1f91442d")
-    implementation("net.dv8tion:JDA:5.0.0-alpha.17")
+    implementation("net.dv8tion:JDA:5.0.0-beta.9")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
     implementation("se.michaelthelin.spotify:spotify-web-api-java:7.1.0")
