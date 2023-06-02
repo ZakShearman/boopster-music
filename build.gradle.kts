@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 /**
  * The majority of elements were at least inspired and mostly taken from JDA and lightly modified for this project.
  * You can find JDA's build.gradle.kts here: https://github.com/DV8FromTheWorld/JDA/blob/master/build.gradle.kts
@@ -41,7 +43,7 @@ dependencies {
     implementation("org.springframework.data:spring-data-keyvalue")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
+    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.1.2")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -56,6 +58,10 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    this.archiveFileName.set("${archiveBaseName.get()}.${archiveExtension.get()}")
 }
 
 // Taken from JDA https://github.com/DV8FromTheWorld/JDA/blob/master/build.gradle.kts#L319
